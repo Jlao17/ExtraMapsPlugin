@@ -99,6 +99,7 @@ public class ExtraMapsPlugin extends Plugin
 
 		if (map == null)
 		{
+			overlayManager.add(worldMapOverlay);
 			overlayManager.remove(extraMapsOverlay);
 		}
 	}

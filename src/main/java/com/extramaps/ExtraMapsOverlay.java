@@ -45,11 +45,11 @@ public class ExtraMapsOverlay extends Overlay
         {
             return null;
         }
-        renderTest(graphics);
+        renderMap(graphics);
         return null;
     }
 
-    private void renderTest(Graphics2D graphics)
+    private void renderMap(Graphics2D graphics)
     {
         // The map widget.
         Widget mapWidget = client.getWidget(WidgetInfo.WORLD_MAP_VIEW);
