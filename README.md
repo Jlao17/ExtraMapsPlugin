@@ -9,4 +9,4 @@ If you have any suggestions please do add me on Discord (Dogege#3905).
 Feature and pull requests are always welcome.
 
 
-![alttext](https://media.giphy.com/media/eyn4mYsmZZeXV0rNah/giphy.gif)
+![alttext](https://media.giphy.com/media/18VffIQQwHgJU6cgbp/giphy.gif)
