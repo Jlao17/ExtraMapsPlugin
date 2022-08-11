@@ -12,9 +12,9 @@ import java.awt.image.BufferedImage;
 @Getter
 enum DungeonLocation
 {
-    SHILO_VILLAGE_GEM_MINE(Range.between(2821,2825), Range.between(2999, 3003), 0, "/test2.png"),
     APE_ATOLL_DUNGEON(Range.between(2760,2764), Range.between(2701,2705), 0, "/ApeAtollDungeon.jpg"),
-    LIGHTHOUSE_BASEMENT(Range.between(2507, 2509), Range.between(3643, 3645), 0, "/LighthouseBasement.jpg");
+    LIGHTHOUSE_BASEMENT(Range.between(2506, 2510), Range.between(3642, 3646), 0, "/LighthouseBasement.jpg"),
+    SMOKE_DUNGEON(Range.between(3307, 3311), Range.between(2960, 2964), 0, "/SmokeDungeon.jpg");
 
     private final Range<Integer> xRange;
     private final Range<Integer> yRange;
