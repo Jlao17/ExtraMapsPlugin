@@ -50,7 +50,7 @@ public class ExtraMapsPlugin extends Plugin
 	@Inject
 	private ExtraMapsOverlay extraMapsOverlay;
 
-	private String imagePath;
+	private BufferedImage imagePath;
 
 	public boolean overlayDrawn = false;
 
@@ -93,7 +93,7 @@ public class ExtraMapsPlugin extends Plugin
 										l.getPlane() == mapPoint.dx(dx).dy(dy).getPlane() &&
 										client.getMouseCurrentButton() == 1)
 								{
-									setImagePath(l.getImagePath());
+									setBufferedImage(l.getImagePath());
 									if (!overlayDrawn)
 									{
 										overlayManager.remove(worldMapOverlay);
@@ -112,14 +112,14 @@ public class ExtraMapsPlugin extends Plugin
 		}
 	}
 
-	public String getImagePath()
+	public BufferedImage getBufferedImage()
 	{
 		return imagePath;
 	}
 
-	public void setImagePath(String p)
+	public void setBufferedImage(String p)
 	{
-		this.imagePath = p;
+		this.imagePath = ImageUtil.loadImageResource(ExtraMapsOverlay.class, p);
 	}
 
 	@Provides

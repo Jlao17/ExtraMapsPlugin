@@ -20,6 +20,9 @@ public class ExtraMapsOverlay extends Overlay
     private final int CLOSE_ICON_CHILD_ID = 38;
     private final int MAP_BOTTOM_BAR = 22;
 
+    private final BufferedImage closeIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/CloseIcon.png");
+    private final BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/OSRSCompass.png");
+
     @Inject
     private ExtraMapsOverlay(Client client, ExtraMapsPlugin plugin, ExtraMapsConfig config)
     {
@@ -40,6 +43,7 @@ public class ExtraMapsOverlay extends Overlay
         }
 
         renderMap(graphics);
+
         return null;
     }
 
@@ -60,13 +64,9 @@ public class ExtraMapsOverlay extends Overlay
         int closeWidth = closeWidget.getWidth();
         int closeHeight = closeWidget.getHeight();
 
-        BufferedImage map = ImageUtil.loadImageResource(ExtraMapsOverlay.class, plugin.getImagePath());
-        BufferedImage closeIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/CloseIcon.png");
-        BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/OSRSCompass.png");
-
         graphics.setColor(Color.BLACK);
         graphics.fillRect(mapX, mapY, mapWidth, mapHeight);
-        drawScaledImage(map, mapWidget, graphics);
+        drawScaledImage(plugin.getBufferedImage(), mapWidget, graphics);
         graphics.drawImage(closeIcon, closeX, closeY, closeWidth, closeHeight, null);
         graphics.drawImage(compassIcon, closeX - 20, closeY + 30, null);
 
