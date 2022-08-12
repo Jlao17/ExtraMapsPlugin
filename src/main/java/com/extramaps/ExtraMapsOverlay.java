@@ -68,7 +68,7 @@ public class ExtraMapsOverlay extends Overlay
 
         BufferedImage map = ImageUtil.loadImageResource(ExtraMapsOverlay.class, plugin.getImagePath());
         BufferedImage closeIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/CloseIcon.png");
-        BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/osrsCompass.png");
+        BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/OSRSCompass.png");
 
         // Remove worldMapOverlay to prevent WorldMapPlugin icons from drawing over the map
         overlayManager.remove(worldMapOverlay);
