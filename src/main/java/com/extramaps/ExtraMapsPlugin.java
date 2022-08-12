@@ -52,6 +52,8 @@ public class ExtraMapsPlugin extends Plugin
 
 	private String imagePath;
 
+	public boolean overlayDrawn = false;
+
 
 
 	@Override
@@ -92,7 +94,12 @@ public class ExtraMapsPlugin extends Plugin
 										client.getMouseCurrentButton() == 1)
 								{
 									setImagePath(l.getImagePath());
-									overlayManager.add(extraMapsOverlay);
+									if (!overlayDrawn)
+									{
+										overlayManager.remove(worldMapOverlay);
+										overlayManager.add(extraMapsOverlay);
+										overlayDrawn = true;
+									}
 								}
 							});
 		}
@@ -101,6 +108,7 @@ public class ExtraMapsPlugin extends Plugin
 		{
 			overlayManager.add(worldMapOverlay);
 			overlayManager.remove(extraMapsOverlay);
+			overlayDrawn = false;
 		}
 	}
 

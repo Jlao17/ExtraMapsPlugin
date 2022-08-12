@@ -5,7 +5,6 @@ import net.runelite.api.Point;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.ui.overlay.*;
-import net.runelite.client.ui.overlay.worldmap.WorldMapOverlay;
 import net.runelite.client.util.ImageUtil;
 
 import javax.inject.Inject;
@@ -18,14 +17,7 @@ public class ExtraMapsOverlay extends Overlay
     private final ExtraMapsPlugin plugin;
     private final ExtraMapsConfig config;
     private final int MAP_GROUP_ID = 595;
-    private final int MAP_BORDER_CHILD_ID = 5;
     private final int CLOSE_ICON_CHILD_ID = 38;
-
-    @Inject
-    private OverlayManager overlayManager;
-
-    @Inject
-    private WorldMapOverlay worldMapOverlay;
 
     @Inject
     private ExtraMapsOverlay(Client client, ExtraMapsPlugin plugin, ExtraMapsConfig config)
@@ -45,6 +37,7 @@ public class ExtraMapsOverlay extends Overlay
         {
             return null;
         }
+
         renderMap(graphics);
         return null;
     }
@@ -70,8 +63,6 @@ public class ExtraMapsOverlay extends Overlay
         BufferedImage closeIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/CloseIcon.png");
         BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/OSRSCompass.png");
 
-        // Remove worldMapOverlay to prevent WorldMapPlugin icons from drawing over the map
-        overlayManager.remove(worldMapOverlay);
         graphics.setColor(Color.BLACK);
         graphics.fillRect(mapX, mapY, mapWidth, mapHeight);
         drawScaledImage(map, mapWidget, graphics);
