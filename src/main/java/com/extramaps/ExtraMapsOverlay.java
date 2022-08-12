@@ -18,6 +18,7 @@ public class ExtraMapsOverlay extends Overlay
     private final ExtraMapsConfig config;
     private final int MAP_GROUP_ID = 595;
     private final int CLOSE_ICON_CHILD_ID = 38;
+    private final int MAP_BOTTOM_BAR = 22;
 
     @Inject
     private ExtraMapsOverlay(Client client, ExtraMapsPlugin plugin, ExtraMapsConfig config)
@@ -27,7 +28,7 @@ public class ExtraMapsOverlay extends Overlay
         this.config = config;
         setLayer(OverlayLayer.MANUAL);
         setPosition(OverlayPosition.DYNAMIC);
-        drawAfterLayer(595, 22);
+        drawAfterLayer(MAP_GROUP_ID, MAP_BOTTOM_BAR);
     }
 
     @Override
