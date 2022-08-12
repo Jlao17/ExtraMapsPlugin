@@ -14,7 +14,8 @@ enum DungeonLocation
 {
     APE_ATOLL_DUNGEON(Range.between(2760,2764), Range.between(2701,2705), 0, "/ApeAtollDungeon.jpg"),
     LIGHTHOUSE_BASEMENT(Range.between(2506, 2510), Range.between(3642, 3646), 0, "/LighthouseBasement.jpg"),
-    SMOKE_DUNGEON(Range.between(3307, 3311), Range.between(2960, 2964), 0, "/SmokeDungeon.jpg");
+    SMOKE_DUNGEON(Range.between(3307, 3311), Range.between(2960, 2964), 0, "/SmokeDungeon.jpg"),
+    UNDERGROUND_PASS(Range.between(2432, 2436), Range.between(3313, 3317), 0, "/UndergroundPass.jpg");
 
     private final Range<Integer> xRange;
     private final Range<Integer> yRange;
