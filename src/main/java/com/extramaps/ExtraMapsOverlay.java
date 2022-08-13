@@ -1,17 +1,21 @@
 package com.extramaps;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Point;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.ui.overlay.*;
+import net.runelite.client.ui.overlay.worldmap.WorldMapOverlay;
 import net.runelite.client.util.ImageUtil;
 
 import javax.inject.Inject;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-public class ExtraMapsOverlay extends Overlay
+@Slf4j
+public class ExtraMapsOverlay extends Overlay implements MouseWheelListener
 {
     private final Client client;
     private final ExtraMapsPlugin plugin;
@@ -19,7 +23,7 @@ public class ExtraMapsOverlay extends Overlay
     private final int MAP_GROUP_ID = 595;
     private final int CLOSE_ICON_CHILD_ID = 38;
     private final int MAP_BOTTOM_BAR = 22;
-
+    public double zoomLevel = 1;
     private final BufferedImage closeIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/CloseIcon.png");
     private final BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/OSRSCompass.png");
 
@@ -29,9 +33,34 @@ public class ExtraMapsOverlay extends Overlay
         this.client = client;
         this.plugin = plugin;
         this.config = config;
+        client.getCanvas().addMouseWheelListener(this::mouseWheelMoved);
         setLayer(OverlayLayer.MANUAL);
         setPosition(OverlayPosition.DYNAMIC);
         drawAfterLayer(MAP_GROUP_ID, MAP_BOTTOM_BAR);
+    }
+
+    @Inject
+    private WorldMapOverlay worldMapOverlay;
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        final Widget mapWidget = client.getWidget(WidgetInfo.WORLD_MAP_VIEW);
+        if (mapWidget == null)
+        {
+            return;
+        }
+
+        if (mapWidget.getBounds().contains(client.getMouseCanvasPosition().getX(), client.getMouseCanvasPosition().getY()))
+        {
+            if (e.getWheelRotation() == 1)
+            {
+                zoomLevel = zoomLevel + 0.05;
+            }
+            else
+            {
+                zoomLevel = zoomLevel - 0.05;
+            }
+        }
     }
 
     @Override
@@ -69,10 +98,9 @@ public class ExtraMapsOverlay extends Overlay
         drawScaledImage(plugin.getBufferedImage(), mapWidget, graphics);
         graphics.drawImage(closeIcon, closeX, closeY, closeWidth, closeHeight, null);
         graphics.drawImage(compassIcon, closeX - 20, closeY + 30, null);
-
     }
 
-    public static void drawScaledImage(BufferedImage image, Widget widget, Graphics2D graphics)
+    public void drawScaledImage(BufferedImage image, Widget widget, Graphics2D graphics)
     {
         // Get map top left coordinates
         Point widgetPoint = widget.getCanvasLocation();
@@ -123,8 +151,9 @@ public class ExtraMapsOverlay extends Overlay
             x2 = widgetWidth + x1;
             y2 = widgetHeight + y1;
         }
-
-        graphics.drawImage(image, widgetX , widgetY , x2, y2,
-                0, 0, imgWidth, imgHeight, null);
+        // Apply zoom value
+        int imageWidth = (int) (imgWidth * zoomLevel);
+        int imageHeight = (int) (imgHeight * zoomLevel);
+        graphics.drawImage(image, widgetX, widgetY, x2, y2, 0, 0, imageWidth , imageHeight , null);
     }
 }

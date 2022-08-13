@@ -16,15 +16,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.worldmap.WorldMapOverlay;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import net.runelite.client.util.ImageUtil;
-import org.apache.commons.lang3.Range;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Predicate;
+
 
 @Slf4j
 @PluginDescriptor(
@@ -68,7 +65,6 @@ public class ExtraMapsPlugin extends Plugin
 		log.info("ExtraMaps stopped!");
 	}
 
-
 	@Subscribe
 	public void onClientTick(ClientTick clientTick)
 	{
@@ -76,21 +72,21 @@ public class ExtraMapsPlugin extends Plugin
 		if (map != null)
 		{
 
-			Point point = client.getMouseCanvasPosition();
+			Point mousePos = client.getMouseCanvasPosition();
 			float zoom = client.getRenderOverview().getWorldMapZoom();
 			RenderOverview renderOverview = client.getRenderOverview();
-			final WorldPoint mapPoint = new WorldPoint(renderOverview.getWorldMapPosition().getX(), renderOverview.getWorldMapPosition().getY(), 0);
-			final Point middle = worldMapOverlay.mapWorldPointToGraphicsPoint(mapPoint);
-			final int dx = (int) ((point.getX() - middle.getX()) / zoom);
-			final int dy = (int) ((-(point.getY() - middle.getY())) / zoom);
+			final WorldPoint mapWorldPoint = new WorldPoint(renderOverview.getWorldMapPosition().getX(), renderOverview.getWorldMapPosition().getY(), 0);
+			final Point middle = worldMapOverlay.mapWorldPointToGraphicsPoint(mapWorldPoint);
+			final int dx = (int) ((mousePos.getX() - middle.getX()) / zoom);
+			final int dy = (int) ((-(mousePos.getY() - middle.getY())) / zoom);
 
 			// Iterate over the DungeonLocation enum and set the correct map when a corresponding WorldPoint is clicked.
 			Arrays.stream(DungeonLocation.values())
 					.forEach(l ->
 							{
-								if (l.getXRange().contains(mapPoint.dx(dx).dy(dy).getX()) &&
-										l.getYRange().contains(mapPoint.dx(dx).dy(dy).getY()) &&
-										l.getPlane() == mapPoint.dx(dx).dy(dy).getPlane() &&
+								if (l.getXRange().contains(mapWorldPoint.dx(dx).dy(dy).getX()) &&
+										l.getYRange().contains(mapWorldPoint.dx(dx).dy(dy).getY()) &&
+										l.getPlane() == mapWorldPoint.dx(dx).dy(dy).getPlane() &&
 										client.getMouseCurrentButton() == 1)
 								{
 									setBufferedImage(l.getImagePath());
@@ -112,6 +108,8 @@ public class ExtraMapsPlugin extends Plugin
 		}
 	}
 
+
+
 	public BufferedImage getBufferedImage()
 	{
 		return imagePath;
@@ -127,4 +125,5 @@ public class ExtraMapsPlugin extends Plugin
 	{
 		return configManager.getConfig(ExtraMapsConfig.class);
 	}
+
 }
