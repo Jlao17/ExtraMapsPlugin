@@ -16,12 +16,16 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.plugins.worldmap.WorldMapPlugin;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.worldmap.WorldMapOverlay;
+import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import net.runelite.client.util.ImageUtil;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+
 
 
 @Slf4j
@@ -41,6 +45,9 @@ public class ExtraMapsPlugin extends Plugin
     private WorldMapOverlay worldMapOverlay;
 
     @Inject
+    private WorldMapPointManager worldMapPointManager;
+
+    @Inject
     private OverlayManager overlayManager;
 
     @Inject
@@ -48,6 +55,9 @@ public class ExtraMapsPlugin extends Plugin
 
     private BufferedImage imagePath;
     private String dungeonName;
+
+    private static final BufferedImage DUNGEON_ICON =  ImageUtil.loadImageResource(ExtraMapsPlugin.class, "/icons/OSRSDungeonEntrance.png") ;
+
     public boolean overlayDrawn = false;
 
 
@@ -55,6 +65,7 @@ public class ExtraMapsPlugin extends Plugin
     protected void startUp() throws Exception
     {
         log.info("ExtraMaps started!");
+        setDungeonIcons();
     }
 
     @Override
@@ -129,11 +140,24 @@ public class ExtraMapsPlugin extends Plugin
         this.dungeonName = d;
     }
 
-    public void resetMapOverlay()
+    private void resetMapOverlay()
     {
         extraMapsOverlay.showOriginal = true;
         extraMapsOverlay.curX = 0;
         extraMapsOverlay.curY = 0;
+    }
+
+    private void setDungeonIcons()
+    {
+        Arrays.stream(DungeonIcon.values())
+                .map(l ->
+                        WorldMapPoint.builder()
+                                .worldPoint(l.getLocation())
+                                .image(DUNGEON_ICON)
+                                .tooltip(l.getTooltip())
+                                .build()
+                )
+                .forEach(worldMapPointManager::add);
     }
 
     @Provides

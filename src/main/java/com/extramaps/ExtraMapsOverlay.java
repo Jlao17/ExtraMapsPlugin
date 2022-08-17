@@ -37,8 +37,8 @@ public class ExtraMapsOverlay extends OverlayPanel implements MouseWheelListener
     private int pressedX;
     private int pressedY;
 
-    private final BufferedImage closeIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/CloseIcon.png");
-    private final BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/OSRSCompass.png");
+    private final BufferedImage closeIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/icons/CloseIcon.png");
+    private final BufferedImage compassIcon = ImageUtil.loadImageResource(ExtraMapsOverlay.class, "/icons/OSRSCompass.png");
 
     @Inject
     private ExtraMapsOverlay(Client client, ExtraMapsPlugin plugin, ExtraMapsConfig config)
