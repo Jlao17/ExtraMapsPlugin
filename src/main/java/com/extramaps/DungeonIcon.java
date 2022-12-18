@@ -7,7 +7,8 @@ import net.runelite.api.coords.WorldPoint;
 enum DungeonIcon
 {
 
-    EAGLES_PEAK_DUNGEON("Eagles' Peak Dungeon", new WorldPoint(2328, 3496, 0));
+    EAGLES_PEAK_DUNGEON("Eagles' Peak Dungeon", new WorldPoint(2328, 3496, 0)),
+    ELEMENTAL_WORKSHOP("Elemental Workshop", new WorldPoint(2710, 3497, 0));
     private final String tooltip;
     private final WorldPoint location;
 
