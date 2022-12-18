@@ -3,9 +3,11 @@ package com.extramaps;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Point;
+import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.ui.overlay.*;
 import net.runelite.client.util.ImageUtil;
 
@@ -26,8 +28,8 @@ public class ExtraMapsOverlay extends OverlayPanel implements MouseWheelListener
     private final int MAP_GROUP_ID = 595;
     private final int CLOSE_ICON_CHILD_ID = 38;
     private final String TITLE_FONT_COLOR = "#ff981f";
-    private double zoomLevel = 1;
     public boolean showOriginal = true;
+    public double zoomLevel = 1;
     public int curX;
     public int curY;
     private int dragX;
@@ -53,6 +55,15 @@ public class ExtraMapsOverlay extends OverlayPanel implements MouseWheelListener
         setPriority(OverlayPriority.HIGHEST);
         setLayer(OverlayLayer.MANUAL);
         drawAfterInterface(WidgetID.WORLD_MAP_GROUP_ID);
+    }
+
+    @Subscribe
+    public void onWidgetLoaded(WidgetLoaded event)
+    {
+        if (event.getGroupId() == MAP_GROUP_ID)
+        {
+
+        }
     }
 
     @Override
@@ -220,7 +231,7 @@ public class ExtraMapsOverlay extends OverlayPanel implements MouseWheelListener
      * @param widget   The map widget to be used as reference for the image.
      * @param graphics Graphics2D used to draw the image.
      * @return An image drawn on the overlay.
-     * @author Jason Lao
+     * @author JLao17
      */
     public void drawScaledImage(BufferedImage image, Widget widget, Graphics2D graphics)
     {

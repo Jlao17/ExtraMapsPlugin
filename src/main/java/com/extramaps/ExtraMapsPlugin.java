@@ -145,6 +145,7 @@ public class ExtraMapsPlugin extends Plugin
         extraMapsOverlay.showOriginal = true;
         extraMapsOverlay.curX = 0;
         extraMapsOverlay.curY = 0;
+        extraMapsOverlay.zoomLevel = 1;
     }
 
     private void setDungeonIcons()
